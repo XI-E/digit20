@@ -7,7 +7,7 @@ int d;           // d is no. of digits to be printed
 
 void main(){
 
-	int spool(int, long int, long int);
+	int spool(int, double, double);
 
 	clrscr();
 
@@ -65,7 +65,7 @@ void main(){
 	getch();
 }
 
-int spool(int rc, long int m, long int mn){          	// rc = run-count
+int spool(int rc, double m, double mn){          	// rc = run-count
 	if(rc==d){
 		cout << m << ' '; //<< "     " << mn;       // Testing stuff
 	}
