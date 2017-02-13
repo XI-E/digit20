@@ -67,6 +67,7 @@ void main(){
 
 int spool(int rc, double m, double mn){          	// rc = run-count
 	if(rc==d){
+		cout.precision(d);
 		cout << m << ' '; //<< "     " << mn;       // Testing stuff
 	}
 	else{
