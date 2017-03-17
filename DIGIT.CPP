@@ -1,13 +1,18 @@
 #include <iostream.h>
 #include <math.h>
 #include <conio.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define SIZE 21
 
 int aff[10] = {0,0,0,0,0,0,0,0,0,0};      // aff[i] = affinity of digit i
 int d;           // d is no. of digits to be printed
 
-void main(){
+void generate(char current[], int place);
 
-	int spool(int, double, double);
+void main(){
 
 	clrscr();
 
@@ -59,35 +64,37 @@ void main(){
 			cout << "\nInvalid input, plz try again";
 			goto digitcount;
 		}
+		
+		if(d > SIZE - 1)
+		{
+			cout << "\nWe currently support printing only " << SIZE - 1 << " digits in a numebr" << endl
+				 << "Change SIZE in source code to print greater number of digits\n";
+			goto digitcount;
+		}
 
-		spool(0,0,0);
+		char current[SIZE] = "";
+		generate(current , 0);
 
 	getch();
 }
 
-int spool(int rc, double m, double mn){          	// rc = run-count
-	if(rc==d){
-		cout.precision(d);
-		cout << m << ' '; //<< "     " << mn;       // Testing stuff
+void generate (char current[], int place)
+{
+	if(place == d)
+	{
+		current[place] = '\0';
+		printf("%s\n", current);
+		return;
 	}
-	else{
-		for(int t = (rc==0 ? 1 : 0); t<10; t++){
-			if(aff[t]!=0){
-				aff[t]--;
-				int n = d - rc - 1;
-				mn = m;
-				m += t*(pow(10,n));
-				rc++;
-				///////////////////////////
-				rc = spool(rc, m, mn);
-				m = mn;
-				///////////////////////////
-
-				aff[t]++;
-			}
-		}
+	
+	char temp[SIZE]; strcpy(temp, current);
+	for(int i = (place == 0 ? 1 : 0) ; i <= 9; i++)
+	{
+		if (aff[i] == 0) continue;
+		
+		aff[i]--; 
+		temp[place] = (char) (i + '0');
+		generate (temp, place + 1);
+		aff[i]++;
 	}
-	rc--;
-	return rc;
 }
-
