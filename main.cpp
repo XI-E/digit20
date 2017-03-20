@@ -1,12 +1,15 @@
 #include <iostream>
 #include <math.h>
 #include <ctype.h>
+#include <thread>
+#include "rlutil.h"
 
 using namespace std;
 
 int freq[10], num_digits;
 
 void gen_nums(int curr_place, unsigned long long curr_num = 0);
+void esc_exit();
 
 int main(void)
 {
@@ -54,6 +57,7 @@ int main(void)
 	}
 	while(num_digits > total_digits || num_digits < 0);
 	
+	std::thread p = std::thread(esc_exit);
 	gen_nums(num_digits);		
 	cout << endl;
 }
@@ -62,7 +66,7 @@ void gen_nums(int curr_place, unsigned long long curr_num)
 {	
 	if(curr_place == 0)
 	{
-		cout << curr_num << " ";
+		cout << curr_num << "\n";
 		return;
 	}
 
@@ -77,6 +81,19 @@ void gen_nums(int curr_place, unsigned long long curr_num)
 			gen_nums(curr_place - 1, temp);
 			
 			freq[i]++;
+		}
+	}
+}
+
+void esc_exit()
+{
+	std::cin.ignore(1000, '\n');
+	while(true)
+	{
+		if(kbhit())
+		{
+			std::cout.flush();
+			exit(1);
 		}
 	}
 }
